@@ -22,7 +22,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['add_to_Re:View (Panopto)'] = 'Add this course to Re:View (Panopto) (re-add to sync user lists)';
+$string['add_to_panopto'] = 'Add this course to Re:View (Panopto) (re-add to sync user lists)';
 $string['back_to_config'] = 'Back to config';
 $string['back_to_course'] = 'Back to course';
 $string['block_edit_error'] = 'Cannot configure block instance: Global configuration incomplete. Please contact your system administrator.';
@@ -32,7 +32,7 @@ $string['block_global_application_key'] = 'Application Key';
 $string['block_global_hostname'] = 'Re:View (Panopto) Server Hostname';
 $string['block_global_instance_description'] = 'This value is prefixed before usernames and course-names in Re:View (Panopto).';
 $string['block_global_instance_name'] = 'Moodle Instance Name';
-$string['block_Re:View (Panopto)_async_tasks'] = 'Asynchronous enrolment sync';
+$string['block_panopto_async_tasks'] = 'Asynchronous enrolment sync';
 $string['completed_recordings'] = 'Completed Recordings';
 $string['course'] = 'Course';
 $string['course_name'] = 'Course Name';
@@ -52,12 +52,12 @@ $string['no_publishers'] = 'No publishers.';
 $string['no_server'] = 'There are no servers set up for provisioning. Please contact system administrator.';
 $string['no_students'] = 'No students.';
 $string['or'] = 'OR';
-$string['Re:View (Panopto):addinstance'] = 'Add a new Re:View (Panopto) block';
-$string['Re:View (Panopto):myaddinstance'] = 'Add a new Re:View (Panopto) block to my page';
-$string['Re:View (Panopto):provision_aspublisher'] = 'Provision as a publisher';
-$string['Re:View (Panopto):provision_asteacher'] = 'Provision as a teacher';
-$string['Re:View (Panopto):provision_course'] = 'Provision a course';
-$string['Re:View (Panopto):provision_multiple'] = 'Provision multiple courses at once';
+$string['panopto:addinstance'] = 'Add a new Re:View (Panopto) block';
+$string['panopto:myaddinstance'] = 'Add a new Re:View (Panopto) block to my page';
+$string['panopto:provision_aspublishe'] = 'Provision as a publisher';
+$string['panopto:provision_asteacher'] = 'Provision as a teacher';
+$string['panopto:provision_course'] = 'Provision a course';
+$string['panopto:provision_multiple'] = 'Provision multiple courses at once';
 $string['pluginname'] = 'Re:View (Panopto)';
 $string['podcast_audio'] = 'Audio Podcast';
 $string['podcast_feeds'] = 'Podcast Feeds';
