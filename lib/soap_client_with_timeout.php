@@ -55,7 +55,6 @@ class soap_client_with_timeout extends SoapClient
     //Overrides parent __doRequest function to make SOAP calls with custom timeout
     public function __doRequest($request, $location, $action, $version, $one_way = FALSE)
     {
-        global $CFG;
         //Attempt to intitialize cURL session to make SOAP calls.
         $curl = curl_init($location);
         
@@ -72,14 +71,6 @@ class soap_client_with_timeout extends SoapClient
                 CURLOPT_SSL_VERIFYPEER => true, //All of our SOAP calls must be made via ssl
                 CURLOPT_TIMEOUT => $this->timeout //Set call timeout in seconds   
                 );
-            $proxy_auth = $CFG->proxyuser.':'.$CFG->proxypassword;
-            $proxy_options = array(
-                CURLOPT_PROXY => $CFG->proxyhost,
-                CURLOPT_PROXYPORT => $CFG->proxyport,
-                CURLOPT_PROXYTYPE => $CFG->proxytype,
-                CURLOPT_PROXYUSERPWD => $proxy_auth
-            );
-            $options = array_merge($options,$proxy_options);
             //Attempt to set the options for the cURL call
             if (curl_setopt_array($curl, $options) !== false)
             {
