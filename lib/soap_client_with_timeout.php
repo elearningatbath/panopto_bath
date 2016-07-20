@@ -31,11 +31,18 @@ set_time_limit(0);
 //Timeouts are measured in seconds.
 class soap_client_with_timeout extends SoapClient
 {
+    /**
+     * The Moodle http options for curl to use as proxy settings etc.
+     */
+    private static $curloptions;
+
     //Timeout value in seconds. Default is 60 seconds.
     public $timeout = 60;
     //Overrides parent constructor to set timeout if included in options
     public function _construct($wsdl, $options)    
     {
+        global $CFG;
+
         if(isset($options['timeout']))
         {
             //Only set timeout if it is a positive value.
@@ -48,6 +55,16 @@ class soap_client_with_timeout extends SoapClient
                 //Otherwise, keep default and log that timeout was not set.
                 error_log("Soap Client timeout must be greater than zero. Reverting to default timeout of 60 seconds.");
             }
+        }
+        // Use Moodle http proxy settings.
+        // todo does not consider proxybypass setting.
+        if (empty(self::$curloptions)) {
+            self::$curloptions = array(
+                CURLOPT_PROXY => $CFG->proxyhost,
+                CURLOPT_PROXYPORT => $CFG->proxyport,
+                CURLOPT_PROXYTYPE => (($CFG->proxytype === 'HTTP') ? CURLPROXY_HTTP : CURLPROXY_SOCKS5),
+                CURLOPT_PROXYUSERPWD => ((empty($CFG->proxypassword)) ? $CFG->proxyuser : "{$CFG->proxyuser}:{$CFG->proxypassword}"),
+            );
         }
         //After setting timeout, call the parent constructor
         parent::__construct($wsdl, $options);
@@ -71,6 +88,7 @@ class soap_client_with_timeout extends SoapClient
                 CURLOPT_SSL_VERIFYPEER => true, //All of our SOAP calls must be made via ssl
                 CURLOPT_TIMEOUT => $this->timeout //Set call timeout in seconds   
                 );
+            $options = array_merge(self::$curloptions, $options); // Add proxy options to curl request.
             //Attempt to set the options for the cURL call
             if (curl_setopt_array($curl, $options) !== false)
             {
