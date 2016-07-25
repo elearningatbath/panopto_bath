@@ -42,26 +42,35 @@ set_time_limit(0);
 class soap_client_with_timeout extends SoapClient
 {
     /**
-     * @var int $timeout Timeout value in seconds. Default is 60 seconds.
+     * The Moodle http options for curl to use as proxy settings etc.
      */
+    private static $curloptions;
+
+    //Timeout value in seconds. Default is 60 seconds.
     public $timeout = 60;
 
-    /**
-     * Overrides parent constructor to set timeout if included in options.
-     * @param string $wsdl
-     * @param array $options
-     */
-    public function _construct($wsdl, $options) {
-        if (isset($options['timeout'])) {
-            // Only set timeout if it is a positive value.
-            if ($options['timeout'] > 0) {
+        if(isset($options['timeout']))
+        {
+            //Only set timeout if it is a positive value.
+            if($options['timeout'] > 0)
+            {
                 $this->timeout = $options['timeout'];
             } else {
                 // Otherwise, keep default and log that timeout was not set.
                 error_log($errorstring);
             }
         }
-        // After setting timeout, call the parent constructor.
+        // Use Moodle http proxy settings.
+        // todo does not consider proxybypass setting.
+        if (empty(self::$curloptions)) {
+            self::$curloptions = array(
+                CURLOPT_PROXY => $CFG->proxyhost,
+                CURLOPT_PROXYPORT => $CFG->proxyport,
+                CURLOPT_PROXYTYPE => (($CFG->proxytype === 'HTTP') ? CURLPROXY_HTTP : CURLPROXY_SOCKS5),
+                CURLOPT_PROXYUSERPWD => ((empty($CFG->proxypassword)) ? $CFG->proxyuser : "{$CFG->proxyuser}:{$CFG->proxypassword}"),
+            );
+        }
+        //After setting timeout, call the parent constructor
         parent::__construct($wsdl, $options);
     }
 
@@ -93,7 +102,11 @@ class soap_client_with_timeout extends SoapClient
                 CURLOPT_SSL_VERIFYPEER => true, // All of our SOAP calls must be made via ssl.
                 CURLOPT_TIMEOUT => $this->timeout // Set call timeout in seconds.
             );
-
+            //Add curl options
+            $options[CURLOPT_PROXY] = $CFG->proxyhost;
+            $options[CURLOPT_PROXYPORT] = $CFG->proxyport;
+            $options[CURLOPT_PROXYTYPE] = (($CFG->proxytype === 'HTTP') ? CURLPROXY_HTTP : CURLPROXY_SOCKS5);
+            $option[CURLOPT_PROXYUSERPWD] = ((empty($CFG->proxypassword)) ? $CFG->proxyuser : "{$CFG->proxyuser}:{$CFG->proxypassword}");
             // Attempt to set the options for the cURL call.
             if (curl_setopt_array($curl, $options) !== false) {
                 // Make call using cURL (including timeout settings).
