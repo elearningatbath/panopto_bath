@@ -4,6 +4,7 @@ class panopto_auth_soap_client extends SoapClient{
      * The Moodle http options for curl to use as proxy settings etc.
      */
     private static $curloptions;
+    public $timeout = 60;
     private $getVersionAction = "http://tempuri.org/IAuth/GetServerVersion";
     
     public function __construct($servername)
