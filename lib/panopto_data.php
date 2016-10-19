@@ -198,7 +198,7 @@ class panopto_data {
                 self::$creatordefaultrolemapping
                 );
         }
-        
+        $provisioninginfo = new \stdClass();
         $provisioninginfo->ShortName = $DB->get_field('course', 'shortname', array('id' => $this->moodlecourseid));
         $provisioninginfo->LongName = $DB->get_field('course', 'fullname', array('id' => $this->moodlecourseid));
         $provisioninginfo->ExternalCourseID = $this->instancename . ":" . $this->moodlecourseid;
