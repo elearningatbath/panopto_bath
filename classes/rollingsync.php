@@ -74,7 +74,7 @@ class block_panopto_rollingsync {
             || $CFG->version < self::$requiredVersion) {
             return;
         }
-
+        var_dump($event);
         $task = new \block_panopto\task\update_user();
         $task->set_custom_data(array(
             'courseid' => $event->courseid,
