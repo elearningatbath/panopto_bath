@@ -38,9 +38,7 @@ class update_user extends \core\task\adhoc_task {
 
     public function execute() {
         $eventdata = (array) $this->get_custom_data();
-
         $panopto = new \panopto_data($eventdata['courseid']);
-        var_dump($eventdata);
         $enrolmentinfo = $this->get_info_for_enrolment_change($panopto, $eventdata['relateduserid'], $eventdata['contextid']);
 
         switch ($eventdata['eventtype']) {
