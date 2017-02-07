@@ -48,7 +48,7 @@ class panopto_auth_soap_client extends SoapClient {
         // Set call timeout to 5 minutes.
         parent::__construct
         (
-            'https://'. $servername . '/Panopto/PublicAPI/4.0/Auth.svc?wsdl',
+            'http://'. $servername . '/Panopto/PublicAPI/4.0/Auth.svc?wsdl',
             array(
                 'proxy_host' => $CFG->proxyhost,
                 'proxy_port' => $CFG->proxyport
