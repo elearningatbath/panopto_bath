@@ -49,30 +49,25 @@ class soap_client_with_timeout extends SoapClient
     //Timeout value in seconds. Default is 60 seconds.
     public $timeout = 60;
 
-        if(isset($options['timeout']))
-        {
-            //Only set timeout if it is a positive value.
-            if($options['timeout'] > 0)
-            {
+    /**
+     * Overrides parent constructor to set timeout if included in options.
+     * @param string $wsdl
+     * @param array $options
+     */
+    public function _construct($wsdl, $options) {
+        if (isset($options['timeout'])) {
+            // Only set timeout if it is a positive value.
+            if ($options['timeout'] > 0) {
                 $this->timeout = $options['timeout'];
             } else {
                 // Otherwise, keep default and log that timeout was not set.
                 error_log($errorstring);
             }
         }
-        // Use Moodle http proxy settings.
-        // todo does not consider proxybypass setting.
-        if (empty(self::$curloptions)) {
-            self::$curloptions = array(
-                CURLOPT_PROXY => $CFG->proxyhost,
-                CURLOPT_PROXYPORT => $CFG->proxyport,
-                CURLOPT_PROXYTYPE => (($CFG->proxytype === 'HTTP') ? CURLPROXY_HTTP : CURLPROXY_SOCKS5),
-                CURLOPT_PROXYUSERPWD => ((empty($CFG->proxypassword)) ? $CFG->proxyuser : "{$CFG->proxyuser}:{$CFG->proxypassword}"),
-            );
-        }
-        //After setting timeout, call the parent constructor
+        // After setting timeout, call the parent constructor.
         parent::__construct($wsdl, $options);
     }
+
 
     /**
      * Overrides parent __doRequest function to make SOAP calls with custom timeout.
