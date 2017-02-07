@@ -81,7 +81,7 @@ class soap_client_with_timeout extends SoapClient
     public function __doRequest($request, $location, $action, $version, $oneway = false) {
         // Attempt to intitialize cURL session to make SOAP calls.
         $curl = curl_init($location);
-
+        global $CFG;
         // Check cURL was initialized.
         if ($curl !== false) {
             // Set standard cURL options.
