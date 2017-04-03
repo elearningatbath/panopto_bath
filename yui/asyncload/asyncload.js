@@ -37,7 +37,13 @@ YUI.add('moodle-block_panopto-asyncload',
                                         // Remove loading text.
                                         mynode.removeChild(Y.one('#loading_text'));
                                         // Display error in block.
-                                        mynode.set('innerHTML', o.responseText);
+                                        if(o.responseText == ""){
+                                            mynode.set('innerHTML', "Unknown error occurred.Please refresh the page.If problem persists, contact the administrator. " +
+                                                "Error:"+o.status+" - "+o.statusText);
+                                        }
+                                        else{
+                                            mynode.set('innerHTML', o.responseText);
+                                        }
                                     } catch(err) {
                                         Y.log(err.message);
                                     }
