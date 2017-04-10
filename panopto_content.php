@@ -195,9 +195,9 @@ try {
         } catch (Exception $e) {
             $content->text .= "<br><br><span class='error'>" . get_string('error_retrieving', 'block_panopto') . '</span>';
         }
-
+        $folder_url = "https://uniofbath.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%22".$panoptodata->sessiongroupid."%22";
+        $content->text .= '<br/><strong><a href="'.$folder_url.'" target="_blank">Click here to view video content</a></strong>';
         $content->footer = '';
-
 
         echo $content->text;
     }
