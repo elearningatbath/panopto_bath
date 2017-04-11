@@ -112,4 +112,5 @@ $string['take_notes'] = 'Take Notes';
 $string['unconfigured'] = 'Global configuration incomplete. Please contact your system administrator.';
 $string['unprovisioned'] = 'This course has not yet been provisioned.';
 $string['watch_live'] = 'Watch Live';
+$string['folder_link_name'] = 'Click here to view sessions for this course';
 /* End of file block_panopto.php */
